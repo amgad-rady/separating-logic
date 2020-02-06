@@ -19,11 +19,11 @@ public class Label extends Formula {
 
 	@Override
 	public String toLaTeX() {
-		return "" + this.label;
+		return "label" + this.label;
 	}
 	
 	@Override
 	public String toString() {
-		return "" + this.label;
+		return "label" + this.label;
 	}
 }
