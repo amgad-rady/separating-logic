@@ -1,6 +1,3 @@
-import java.util.HashMap;
-import java.util.LinkedList;
-
 public class Graph {
     public int nodes;
     public int[][] edges; //edges represented by a square matrix of size nodes.
@@ -14,7 +11,14 @@ public class Graph {
         this.capacities = capacities;
     }
 
-    public Graph construct_reduced_graph(double[][] flow) {
+    public double[][] initialize_flow() {
+        double[][] flow = new double[nodes][nodes];
+        //Implement North-West corner algorithm.
+
+        return flow;
+    }
+
+    public ReducedGraph construct_reduced_graph(double[][] flow) {
         double[][] reduced_costs = new double[this.nodes][this.nodes];
         double[][] reduced_capacities = new double[this.nodes][this.nodes];
         int[][] reduced_edges = new int[this.nodes][this.nodes];
@@ -33,48 +37,6 @@ public class Graph {
                 }
             }
         }
-        return new Graph(this.nodes, reduced_edges, reduced_costs, reduced_capacities);
-    }
-
-    //This is a variant of the distance relabling function used to compute shortest paths adapted to detecing negative cycles.
-    public Cycle find_negative_cycle(Graph reduced_graph, int initial_node) throws NullPointerException {
-        double[] d = new double[reduced_graph.nodes];
-        int[] visits = new int[reduced_graph.nodes];
-
-        HashMap<Integer, Integer> predecessors = new HashMap<>();
-
-        for (int i = 0; i < reduced_graph.nodes && i != initial_node; i++) {
-            d[i] = Double.MAX_VALUE;
-        }
-        LinkedList<Integer> queue = new LinkedList<>();
-        queue.push(initial_node);
-        while (!queue.isEmpty()) {
-            int i = queue.pop();
-            visits[i]++;
-
-            //An exit condition is if we visit the same node at least |nodes| times.
-            if (visits[i] >= reduced_graph.nodes) {
-                return new Cycle(predecessors, i);
-            }
-
-            for (int j = 0; j < reduced_graph.nodes; j++) {
-                if (reduced_graph.edges[i][j] == 1 && d[j] > d[i] + reduced_graph.costs[i][j]) {
-                    d[j] = d[i] + reduced_graph.costs[i][j];
-                    predecessors.put(j, i);
-                    queue.push(j);
-                }
-            }
-        }
-        throw new NullPointerException("No negative cycle");
-    }
-
-    private class Cycle {
-        HashMap<Integer, Integer> predecessor_tree;
-        int first;
-
-        public Cycle(HashMap<Integer, Integer> pred, int element) {
-            this.predecessor_tree = pred;
-            this.first = element;
-        }
+        return new ReducedGraph(this.nodes, reduced_edges, reduced_costs, reduced_capacities, initialize_flow(), this);
     }
 }
