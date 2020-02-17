@@ -6,28 +6,23 @@ public class OptimalCouplingComputer {
     final int n;
     final int m;
     final double[][] initial_flow = initial_feasible_flow();
-    final private int s;
-    final private int t;
-    final private double[][] probabilities;
     final private double[][] distances;
     final double[][] costs = this.generate_costs();
+
     double[][] flow = this.initial_flow.clone();
     double[][] capacity = this.generate_capacity(flow);
 
     public OptimalCouplingComputer(int s, int t, double[][] probabilities, double[][] distances) {
-        this.s = s;
-        this.t = t;
-        this.probabilities = probabilities;
         this.distances = distances;
 
         BipartitieGraph graph = new BipartitieGraph(new LinkedList<>(), new LinkedList<>());
 
         for (int j = 0; j < probabilities.length; j++) {
-            if (this.probabilities[this.s][j] > 0) {
-                graph.left.add(new Pair(j, this.probabilities[this.s][j]));
+            if (probabilities[s][j] > 0) {
+                graph.left.add(new Pair(j, probabilities[s][j]));
             }
-            if (this.probabilities[this.t][j] > 0) {
-                graph.right.add(new Pair(j, this.probabilities[this.t][j]));
+            if (probabilities[t][j] > 0) {
+                graph.right.add(new Pair(j, probabilities[t][j]));
             }
         }
 
@@ -171,7 +166,18 @@ public class OptimalCouplingComputer {
         }
     }
 
-    private class Pair {
+    public double compute_distance() {
+        compute_optimal_flow();
+        double distance = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                distance += flow[i][n + j] * distances[this.graph.left.get(i).state][this.graph.right.get(j).state];
+            }
+        }
+        return distance;
+    }
+
+    private static class Pair {
         public int state;
         public double probability;
 
@@ -191,7 +197,7 @@ public class OptimalCouplingComputer {
         }
     }
 
-    private class Cycle {
+    private static class Cycle {
         int head;
         HashMap<Integer, Integer> predecessor_tree;
 
