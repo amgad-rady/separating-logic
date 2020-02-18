@@ -32,7 +32,7 @@ public class LabelledMarkovChain {
     /**
      * Initializes this labelled Markov chain with the given state 
      * labeling, transition probabilities, and the probabilistic 
-     *bisimilarity distances.
+     * bisimilarity distances.
      * 
      * @param label state labelling of this labelled Markov chain
      * @param probability transition probabilities of this labelled 
@@ -78,7 +78,7 @@ public class LabelledMarkovChain {
      * s to u being different from the probability of transitioning from 
      * t to u
      */
-    public Set<Integer> distinct(int s, int t) {
+    private Set<Integer> distinct(int s, int t) {
 	Set<Integer> distinct = new HashSet<Integer>();
 	for (int u = 0; u < this.label.length; u++) {
 	    if (this.probability[s][u] != this.probability[t][u]) {
@@ -147,7 +147,7 @@ public class LabelledMarkovChain {
 	    return Math.max(this.valueOf(and.getLeft(), state), this.valueOf(and.getRight(), state));
 	} else if (formula instanceof Or) {
 	    Or or = (Or) formula;
-	    return Math.max(this.valueOf(or.getLeft(), state), this.valueOf(or.getRight(), state));
+	    return Math.min(this.valueOf(or.getLeft(), state), this.valueOf(or.getRight(), state));
 	} else if (formula instanceof Next) {
 	    Next next = (Next) formula;
 	    double sum = 0.0;
@@ -156,18 +156,20 @@ public class LabelledMarkovChain {
 	    }
 	    return sum;
 	} else {
-	    throw new RuntimeException();
+	    throw new RuntimeException("Trying to compute the value of formula of unknown type");
 	}
     }
 	
     /**
-     * INCOMPLETE
+     * Returns a formula that approximately seperates the given two states.  
+     * The formula is limited to the given depth (the number of nested next 
+     * operators).  As the depth increases, the formula separates the states
+     * more accurately.
      * 
-     * 
-     * @param depth
-     * @param s
-     * @param t
-     * @return
+     * @param depth the maximum number of nested next operators
+     * @param s a state
+     * @param t a state
+     * @return a formula that seperates the given two states
      */
     public Formula formula(int depth, int s, int t) {
 	if (depth == 0) {
