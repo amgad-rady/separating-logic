@@ -27,10 +27,10 @@ public class Plus extends Formula {
 	
     /**
      * Initializes this formula consisting of the given formula shifted by
-     * the given positive amount. 
+     * the given amount positively (adding). 
      *
      * @param formula a formula
-     * @param shift the positive shift amount  
+     * @param shift the shift amount  
      * @pre. shift in [0, 1]
      */
     public Plus(Formula formula, double shift) {
