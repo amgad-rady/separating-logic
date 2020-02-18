@@ -1,13 +1,9 @@
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class LabelledMarkovChainTest {
-    private LabelledMarkovChainTest() {}
+/*    private LabelledMarkovChainTest() {}
 
     private static int states; // number of states of the labelled Markov chain
     private static double[][] probability; // transition probabilities of the labelled Markov chain
@@ -25,8 +21,8 @@ public class LabelledMarkovChainTest {
 	    // read the distances
 	    readDistances(args[2]);
 
-	    //  
-	    LabelledMarkovChain chain = new LabelledMarkovChain(probability, label, distance);
+	    //
+	    LabelledMarkovChain chain = new LabelledMarkovChain(label, probability, distance);
 	    double[] solution = chain.getOptimalFunction(0, 1);
 	    for (int s = 0; s < states; s++) {
 		System.out.printf("f[%d] = %.3f%n", s, solution[s]);
@@ -42,21 +38,21 @@ public class LabelledMarkovChainTest {
 	}
     }
 
-    /**
+    *//**
      * Reads the transition probabilities from the given file.
      *
      * @param file the name of the file
      * @throws FileNotFoundException if the given file cannot be read
      * @throws InputMismatchException if the given file contains not the right type of data
      * @throws NoSuchElementException if the given file contains not enough data
-     */
+     *//*
     private static void readProbabilities(String file) throws FileNotFoundException, InputMismatchException, NoSuchElementException {
 	try {
 	    Scanner input = new Scanner(new File(file));
 
 	    states = input.nextInt(); // number of states
 	    int transitions = input.nextInt(); // number of transitions
-	    
+
 	    probability = new double[states][states]; // transition probability
 	    for (int t = 0; t < transitions; t++) {
 		int source = input.nextInt();
@@ -75,14 +71,14 @@ public class LabelledMarkovChainTest {
 	}
     }
 
-    /**
+    *//**
      * Reads the labelling from the given file.
      *
      * @param file the name of the file
      * @throws FileNotFoundException if the given file cannot be read
      * @throws InputMismatchException if the given file contains not the right type of data
      * @throws NoSuchElementException if the given file contains not enough data
-     */
+     *//*
     private static void readLabels(String file) throws FileNotFoundException, InputMismatchException, NoSuchElementException {
 	try {
 	    Scanner input = new Scanner(new File(file));
@@ -103,14 +99,14 @@ public class LabelledMarkovChainTest {
 	}
     }
 
-    /**
+    *//**
      * Reads the distances from the given file.
      *
      * @param file the name of the file
      * @throws FileNotFoundException if the given file cannot be read
      * @throws InputMismatchException if the given file contains not the right type of data
      * @throws NoSuchElementException if the given file contains not enough data
-     */
+     *//*
     private static void readDistances(String file) throws FileNotFoundException, InputMismatchException, NoSuchElementException {
 	try {
 	    Scanner input = new Scanner(new File(file));
@@ -132,5 +128,5 @@ public class LabelledMarkovChainTest {
 	} catch (NoSuchElementException e) {
 	    throw new NoSuchElementException("File " + file + " contains not enough data.");
 	}
-    }
+    }*/
 }

@@ -13,7 +13,6 @@ public class LinearProgrammingSolver {
 
 
     public LinearProgrammingSolver(int s, int t, double[][] probabilities, double[][] distance) {
-
         //First compute the size of support tau(s) (n) and support tau(t) (m)
         int n = 0;
         int m = 0;
@@ -44,9 +43,9 @@ public class LinearProgrammingSolver {
                         l++;
                     }
                 }
+                l = 0;
+                k++;
             }
-            k++;
-            l = 0;
         }
 
         this.distances = nontrivial_distances;

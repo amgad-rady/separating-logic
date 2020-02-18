@@ -5,12 +5,12 @@ public class OptimalCouplingComputer {
     final BipartitieGraph graph;
     final int n;
     final int m;
-    final double[][] initial_flow = initial_feasible_flow();
+    final double[][] initial_flow;
     final private double[][] distances;
-    final double[][] costs = this.generate_costs();
+    final double[][] costs;
 
-    double[][] flow = this.initial_flow.clone();
-    double[][] capacity = this.generate_capacity(flow);
+    double[][] flow;
+    double[][] capacity;
 
     public OptimalCouplingComputer(int s, int t, double[][] probabilities, double[][] distances) {
         this.distances = distances;
@@ -29,6 +29,12 @@ public class OptimalCouplingComputer {
         this.graph = graph;
         this.n = this.graph.left.size();
         this.m = this.graph.right.size();
+
+        this.initial_flow = initial_feasible_flow();
+        this.costs = generate_costs();
+
+        this.flow = this.initial_flow;
+        this.capacity = this.generate_capacity(this.initial_flow);
     }
 
     //Generate an initial flow
@@ -187,16 +193,6 @@ public class OptimalCouplingComputer {
         }
     }
 
-    private class BipartitieGraph {
-        private LinkedList<Pair> left;
-        private LinkedList<Pair> right;
-
-        public BipartitieGraph(LinkedList<Pair> left, LinkedList<Pair> right) {
-            this.left = left;
-            this.right = right;
-        }
-    }
-
     private static class Cycle {
         int head;
         HashMap<Integer, Integer> predecessor_tree;
@@ -204,6 +200,16 @@ public class OptimalCouplingComputer {
         public Cycle(int head, HashMap<Integer, Integer> predecessor_tree) {
             this.head = head;
             this.predecessor_tree = predecessor_tree;
+        }
+    }
+
+    private class BipartitieGraph {
+        private LinkedList<Pair> left;
+        private LinkedList<Pair> right;
+
+        public BipartitieGraph(LinkedList<Pair> left, LinkedList<Pair> right) {
+            this.left = left;
+            this.right = right;
         }
     }
 }

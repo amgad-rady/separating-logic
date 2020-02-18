@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException {
+
 		// read the transitions
 		Scanner input = new Scanner(new File("sample.tra"));
 		int states = input.nextInt();
@@ -41,9 +42,16 @@ public class Main {
 		}
 		input.close();
 
-		LabelledMarkovChain chain = new LabelledMarkovChain(label, probability, distance);
-		System.out.println(chain);
-		
+		//LabelledMarkovChain chain = new LabelledMarkovChain(label, probability, distance);
+		//System.out.println(chain);
+
+		OptimalCouplingComputer calculator = new OptimalCouplingComputer(0, 1, probability, distance);
+		System.out.println("The cycle cancelling algorithm says Delta(d) is:");
+		System.out.println(calculator.compute_distance());
+
+		LinearProgrammingSolver test_calculator = new LinearProgrammingSolver(0, 1, probability, distance);
+		System.out.println("The MCF LP solver says Delta(d) is:");
+		System.out.println(test_calculator.compute_distance());
 	}
 
 }
