@@ -31,6 +31,7 @@ public class OptimalCouplingComputer {
         this.m = this.graph.right.size();
 
         this.initial_flow = initial_feasible_flow();
+
         this.costs = generate_costs();
 
         this.flow = this.initial_flow;
@@ -125,14 +126,16 @@ public class OptimalCouplingComputer {
 
             if (tail < n) {
                 for (int head = n; head < n + m; head++) {
-                    if (d[head] > d[tail] + costs[tail][head]) {
+                    if (d[head] > d[tail] + costs[tail][head] && this.capacity[tail][head] > 0) {
+                        d[head] = d[tail] + costs[tail][head];
                         q.add(head);
                         predecessor_tree.put(head, tail);
                     }
                 }
             } else {
                 for (int head = 0; head < n; head++) {
-                    if (d[head] > d[tail] + costs[tail][head]) {
+                    if (d[head] > d[tail] + costs[tail][head] && this.capacity[tail][head] > 0) {
+                        d[head] = d[tail] + costs[tail][head];
                         q.add(head);
                         predecessor_tree.put(head, tail);
                     }
@@ -145,8 +148,11 @@ public class OptimalCouplingComputer {
     //Compute the optimal flow
     public void compute_optimal_flow() {
         try {
+            int count = 1;
             while (true) {
                 Cycle cycle = this.find_cycle();
+                System.out.print("Negative cycle found: " + count + ".\n");
+                count++;
                 double delta = Double.MAX_VALUE;
 
                 int j = cycle.head;
@@ -158,13 +164,10 @@ public class OptimalCouplingComputer {
                 } while (j != cycle.head);
 
                 //Note that upon exit from this loop j and i have been reset.
+                //Augment the flow by delta and remove delta from capacities along the cycle.
                 do {
-                    if (i < n) {
-                        flow[i][j] += delta;
-                    } else {
-                        flow[i][j] -= delta;
-                    }
-                    capacity[i][j] -= delta;
+                    this.flow[i][j] += delta;
+                    this.capacity[i][j] -= delta;
 
                     j = i;
                     i = cycle.predecessor_tree.get(j);
@@ -176,8 +179,19 @@ public class OptimalCouplingComputer {
         }
     }
 
+    //Transform the flow from one on the reduced graph to one on the original network.
+    public void rectify_flow() {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                this.flow[i][n + j] -= this.flow[n + j][i];
+                this.flow[n + j][i] = 0.0;
+            }
+        }
+    }
+
     public double compute_distance() {
         compute_optimal_flow();
+        rectify_flow();
         double distance = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
