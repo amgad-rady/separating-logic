@@ -46,11 +46,9 @@ public class OptimalCouplingComputer {
         double[] row = new double[n];
 
         for (int i = 0; i < n; i++) {
-            assert this.graph != null;
             row[i] = this.graph.left.get(i).probability;
         }
         for (int j = 0; j < m; j++) {
-            assert this.graph != null;
             column[j] = this.graph.right.get(j).probability;
         }
 
@@ -59,13 +57,19 @@ public class OptimalCouplingComputer {
         while (i < n && j < n + m) {
             if (row[i] < column[j - n]) {
                 flow[i][j] = row[i];
-                row[i] -= row[i];
-                column[j - n] -= row[i];
+                row[i] -= flow[i][j];
+                column[j - n] -= flow[i][j];
+                if (column[j - n] == 0.0) {
+                    j++;
+                }
                 i++;
             } else {
                 flow[i][j] = column[j - n];
-                row[i] -= column[j - n];
-                column[j - n] -= column[j - n];
+                row[i] -= flow[i][j];
+                column[j - n] -= flow[i][j];
+                if (row[i] == 0.0) {
+                    i++;
+                }
                 j++;
             }
         }
