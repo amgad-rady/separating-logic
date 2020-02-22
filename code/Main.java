@@ -34,7 +34,7 @@ public class Main {
         for (int i = 0; i < states; i++) {
             for (int j = 0; j < states; j++) {
                 if (labels[i] != labels[j]) {
-                    distances[i][j] = 1;
+                    distances[i][j] = 1.0;
                 }
             }
         }

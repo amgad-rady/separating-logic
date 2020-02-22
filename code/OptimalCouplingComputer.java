@@ -9,6 +9,8 @@ public class OptimalCouplingComputer {
     final private double[][] distances;
     final double[][] costs;
 
+    final double delta = 1e-10; //a precision factor to test approximate equality
+
     double[][] flow;
     double[][] capacity;
 
@@ -18,10 +20,10 @@ public class OptimalCouplingComputer {
         BipartitieGraph graph = new BipartitieGraph(new LinkedList<>(), new LinkedList<>());
 
         for (int j = 0; j < probabilities.length; j++) {
-            if (probabilities[s][j] > 0) {
+            if (Math.abs(probabilities[s][j]) > delta) {
                 graph.left.add(new Pair(j, probabilities[s][j]));
             }
-            if (probabilities[t][j] > 0) {
+            if (Math.abs(probabilities[t][j]) > delta) {
                 graph.right.add(new Pair(j, probabilities[t][j]));
             }
         }
@@ -60,7 +62,7 @@ public class OptimalCouplingComputer {
                 flow[i][j] = row[i];
                 row[i] -= flow[i][j];
                 column[j - n] -= flow[i][j];
-                if (column[j - n] == 0.0) {
+                if (Math.abs(column[j - n]) < delta) {
                     j++;
                 }
                 i++;
@@ -68,7 +70,7 @@ public class OptimalCouplingComputer {
                 flow[i][j] = column[j - n];
                 row[i] -= flow[i][j];
                 column[j - n] -= flow[i][j];
-                if (row[i] == 0.0) {
+                if (Math.abs(row[i]) < delta) {
                     i++;
                 }
                 j++;
@@ -126,7 +128,7 @@ public class OptimalCouplingComputer {
 
             if (tail < n) {
                 for (int head = n; head < n + m; head++) {
-                    if (d[head] > d[tail] + costs[tail][head] && this.capacity[tail][head] > 0) {
+                    if (d[head] > d[tail] + costs[tail][head] && Math.abs(this.capacity[tail][head]) > delta) {
                         d[head] = d[tail] + costs[tail][head];
                         q.add(head);
                         predecessor_tree.put(head, tail);
@@ -134,7 +136,7 @@ public class OptimalCouplingComputer {
                 }
             } else {
                 for (int head = 0; head < n; head++) {
-                    if (d[head] > d[tail] + costs[tail][head] && this.capacity[tail][head] > 0) {
+                    if (d[head] > d[tail] + costs[tail][head] && Math.abs(this.capacity[tail][head]) > delta) {
                         d[head] = d[tail] + costs[tail][head];
                         q.add(head);
                         predecessor_tree.put(head, tail);
