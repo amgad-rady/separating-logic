@@ -1,18 +1,56 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) throws FileNotFoundException {
+    public static LabelledMarkovChain getRandomInstance(int states, int number_of_labels) {
+        double p = 2 * Math.log(states) / states; //Erdos-Renyi threshold
+        Random r = new Random();
 
-		// read the transitions
-		Scanner input = new Scanner(new File("sample.tra"));
-		int states = input.nextInt();
-		int transitions = input.nextInt();
-		double[][] probability = new double[states][states];
-		for (int t = 0; t < transitions; t++) {
-			int source = input.nextInt();
+        int[] labels = new int[states];
+        for (int i = 0; i < states; i++) {
+            labels[i] = r.nextInt(number_of_labels);
+        }
+
+        double[][] probabilities = new double[states][states];
+        for (int i = 0; i < states; i++) {
+            double sum = 0;
+            for (int j = 0; j < states; j++) {
+                if (r.nextDouble() <= p) {
+                    probabilities[i][j] += Math.max(1, r.nextInt());
+                    sum += probabilities[i][j];
+                }
+            }
+            for (int j = 0; j < states; j++) {
+                if (probabilities[i][j] > 0) {
+                    probabilities[i][j] = probabilities[i][j] / sum;
+                }
+            }
+        }
+
+        double[][] distances = new double[states][states];
+        for (int i = 0; i < states; i++) {
+            for (int j = 0; j < states; j++) {
+                if (labels[i] != labels[j]) {
+                    distances[i][j] = 1;
+                }
+            }
+        }
+
+        return new LabelledMarkovChain(labels, probabilities, distances);
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+
+        // read the transitions
+        Scanner input = new Scanner(new File("sample.tra"));
+        int states = input.nextInt();
+        int transitions = input.nextInt();
+        double[][] probability = new double[states][states];
+        for (int t = 0; t < transitions; t++) {
+            int source = input.nextInt();
 			int target = input.nextInt();
 			probability[source][target] = input.nextDouble();
 		}
