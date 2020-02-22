@@ -82,22 +82,6 @@ public class Main {
 
         //LabelledMarkovChain chain = new LabelledMarkovChain(label, probability, distance);
         //System.out.println(chain);
-
-        OptimalCouplingComputer calculator = new OptimalCouplingComputer(0, 1, probability, distance);
-        System.out.println("The cycle cancelling algorithm says Delta(d)(s, t) is:");
-        System.out.println(calculator.compute_distance());
-
-        LinearProgrammingSolver test_calculator = new LinearProgrammingSolver(0, 1, probability, distance);
-        System.out.println("The MCF LP solver says Delta(d)(s, t) is:");
-        System.out.println(test_calculator.compute_distance());
-
-        calculator = new OptimalCouplingComputer(2, 3, probability, distance);
-        System.out.println("The cycle cancelling algorithm says Delta(d)(u, v) is:");
-        System.out.println(calculator.compute_distance());
-
-        test_calculator = new LinearProgrammingSolver(2, 3, probability, distance);
-        System.out.println("The MCF LP solver says Delta(d)(u, v) is:");
-        System.out.println(test_calculator.compute_distance());
     }
 
 }

@@ -25,29 +25,29 @@ import java.util.Set;
  * @author Franck van Breugel
  */
 public class LabelledMarkovChain {
-    private int[] label; // state labelling
-    private double[][] probability; // transition probabilities
-    private double[][] distance; // probabilistic bisimilarity distances
-    
-    /**
-     * Initializes this labelled Markov chain with the given state 
-     * labeling, transition probabilities, and the probabilistic 
-     * bisimilarity distances.
-     * 
-     * @param label state labelling of this labelled Markov chain
-     * @param probability transition probabilities of this labelled 
-     * Markov chain
-     * @param distance probabilistic bisimilarity distances of this 
-     * labelled Marko chain
-     */
-    public LabelledMarkovChain(int[] label, double[][] probability, double[][] distance) {
-	super();
-	this.label = label;
-	this.probability = probability;
-	this.distance = distance;
-    }
-	
-    /**
+	public int[] label; // state labelling
+	public double[][] probability; // transition probabilities
+	public double[][] distance; // probabilistic bisimilarity distances
+
+	/**
+	 * Initializes this labelled Markov chain with the given state
+	 * labeling, transition probabilities, and the probabilistic
+	 * bisimilarity distances.
+	 *
+	 * @param label       state labelling of this labelled Markov chain
+	 * @param probability transition probabilities of this labelled
+	 *                    Markov chain
+	 * @param distance    probabilistic bisimilarity distances of this
+	 *                    labelled Marko chain
+	 */
+	public LabelledMarkovChain(int[] label, double[][] probability, double[][] distance) {
+		super();
+		this.label = label;
+		this.probability = probability;
+		this.distance = distance;
+	}
+
+	/**
      * Returns the label of the given state of this labelled Markov chain.
      * 
      * @param state a state
