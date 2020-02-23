@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class OptimalCouplingSolverTest {
     @Test
     public void test_solver_correctness() throws IOException {
-        int states = 8;
-        int labels = 3;
+        int states = 100;
+        int labels = 5;
 
         LabelledMarkovChain LMC = Main.getRandomInstance(states, labels);
         while (LMC.label[0] != LMC.label[1]) {

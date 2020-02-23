@@ -9,6 +9,10 @@ public class Main {
         double p = 2 * Math.log(states) / states; //Erdos-Renyi threshold
         Random r = new Random();
 
+        //Distribution generation parameters
+        int max_int = 10;
+        int min_int = 1;
+
         int[] labels = new int[states];
         for (int i = 0; i < states; i++) {
             labels[i] = r.nextInt(number_of_labels);
@@ -19,7 +23,7 @@ public class Main {
             double sum = 0;
             for (int j = 0; j < states; j++) {
                 if (r.nextDouble() <= p) {
-                    probabilities[i][j] += Math.max(1, r.nextInt());
+                    probabilities[i][j] += r.nextInt((max_int - min_int) + 1) + min_int;
                     sum += probabilities[i][j];
                 }
             }
@@ -82,6 +86,15 @@ public class Main {
 
         //LabelledMarkovChain chain = new LabelledMarkovChain(label, probability, distance);
         //System.out.println(chain);
+
+        OptimalCouplingComputer solver_mcf = new OptimalCouplingComputer(0, 1, probability, distance);
+        LinearProgrammingSolver solver_lp = new LinearProgrammingSolver(0, 1, probability, distance);
+
+        double distance_mcf = solver_mcf.compute_distance();
+        double distance_lp = solver_lp.compute_distance();
+
+        System.out.println("The MCF solver says the distance is: " + distance_mcf);
+        System.out.println("The LP solver says the distance is: " + distance_lp);
     }
 
 }

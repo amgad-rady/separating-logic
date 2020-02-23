@@ -123,6 +123,12 @@ public class OptimalCouplingComputer {
             int tail = q.remove();
             visited[tail]++;
             if (visited[tail] > n + m) {
+                //find a proper node in the cycle
+                int[] tail_corrector = new int[n + m];
+                while (tail_corrector[tail] < 2) {
+                    tail_corrector[tail]++;
+                    tail = predecessor_tree.get(tail);
+                }
                 return new Cycle(tail, predecessor_tree);
             }
 
