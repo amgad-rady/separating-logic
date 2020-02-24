@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -85,7 +86,14 @@ public class Main {
         return new LabelledMarkovChain(label, probability, distance);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+        LabelledMarkovChain chain = read_input();
+        KRDualSolver KR_solver = new KRDualSolver(chain, 0, 1);
+        System.out.println("The KR-dual function is:");
+        System.out.println(Arrays.toString(KR_solver.getKRdual()));
 
+        OptimalCouplingComputer distance_solver = new OptimalCouplingComputer(0, 1, chain.probability, chain.distance);
+        double distance = distance_solver.compute_distance();
+        System.out.println("The new distance is: " + distance);
     }
 }

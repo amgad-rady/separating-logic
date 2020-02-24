@@ -32,9 +32,9 @@ class OptimalCouplingSolverTest {
 
     @Test
     public void test_solver_running_time() {
-        final int NumIterations = 100;
-        final int NumStates = 1000;
-        final int NumLabels = 30;
+        final int NumIterations = 200;
+        final int NumStates = 2500;
+        final int NumLabels = 50;
 
         DescriptiveStatistics trial_mcf = new DescriptiveStatistics();
         DescriptiveStatistics trial_lp = new DescriptiveStatistics();
