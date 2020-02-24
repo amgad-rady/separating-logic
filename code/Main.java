@@ -14,7 +14,7 @@ public class Main {
         int min_int = 1;
 
         int[] labels = new int[states];
-        for (int i = 0; i < states; i++) {
+        for (int i = 2; i < states; i++) {
             labels[i] = r.nextInt(number_of_labels);
         }
 
@@ -42,12 +42,10 @@ public class Main {
                 }
             }
         }
-
         return new LabelledMarkovChain(labels, probabilities, distances);
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-
+    public static LabelledMarkovChain read_input() throws FileNotFoundException {
         // read the transitions
         Scanner input = new Scanner(new File("sample.tra"));
         int states = input.nextInt();
@@ -55,18 +53,18 @@ public class Main {
         double[][] probability = new double[states][states];
         for (int t = 0; t < transitions; t++) {
             int source = input.nextInt();
-			int target = input.nextInt();
-			probability[source][target] = input.nextDouble();
-		}
-		input.close();
+            int target = input.nextInt();
+            probability[source][target] = input.nextDouble();
+        }
+        input.close();
 
-		// read the labels
-		input = new Scanner(new File("sample.lab"));
-		int[] label = new int[states];
-		for (int s = 0; s < states; s++) {
-			label[s] = input.nextInt();
-		}
-		input.close();
+        // read the labels
+        input = new Scanner(new File("sample.lab"));
+        int[] label = new int[states];
+        for (int s = 0; s < states; s++) {
+            label[s] = input.nextInt();
+        }
+        input.close();
 
         // read the transitions
         input = new Scanner(new File("sample.dis"));
@@ -84,17 +82,10 @@ public class Main {
         }
         input.close();
 
-        //LabelledMarkovChain chain = new LabelledMarkovChain(label, probability, distance);
-        //System.out.println(chain);
-
-        OptimalCouplingComputer solver_mcf = new OptimalCouplingComputer(0, 1, probability, distance);
-        LinearProgrammingSolver solver_lp = new LinearProgrammingSolver(0, 1, probability, distance);
-
-        double distance_mcf = solver_mcf.compute_distance();
-        double distance_lp = solver_lp.compute_distance();
-
-        System.out.println("The MCF solver says the distance is: " + distance_mcf);
-        System.out.println("The LP solver says the distance is: " + distance_lp);
+        return new LabelledMarkovChain(label, probability, distance);
     }
 
+    public static void main(String[] args) {
+
+    }
 }

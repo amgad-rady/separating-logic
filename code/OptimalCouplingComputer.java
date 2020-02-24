@@ -156,11 +156,11 @@ public class OptimalCouplingComputer {
     //Compute the optimal flow
     public void compute_optimal_flow() {
         try {
-            int count = 1;
+            //int count = 1;
             while (true) {
                 Cycle cycle = this.find_cycle();
-                System.out.print("Negative cycle found: " + count + ".\n");
-                count++;
+                //System.out.print("Negative cycle found: " + count + ".\n");
+                //count++;
                 double delta = Double.MAX_VALUE;
 
                 int j = cycle.head;
@@ -183,7 +183,7 @@ public class OptimalCouplingComputer {
 
             }
         } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
     }
 
