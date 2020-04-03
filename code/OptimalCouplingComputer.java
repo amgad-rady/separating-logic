@@ -40,7 +40,17 @@ public class OptimalCouplingComputer {
         this.capacity = this.generate_capacity(this.initial_flow);
     }
 
-    //Generate an initial flow
+    /**
+     * Returns a feasible flow.  The feasible flow is computed by means 
+     * of the North West corner method due to Hitchcock.
+     * 
+     * <p>
+     * 
+     * Frank Hitchcock.  The Distribution of a Product from Several Sources to Numerous Localities.
+     * <i>Studies in Applied Mathematics</i>, 20(1/4): 224-230, April 1941.
+     * 
+     * @return a feasible flow.
+     */
     public double[][] initial_feasible_flow() {
         double[][] flow = new double[n + m][n + m];
 
