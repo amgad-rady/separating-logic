@@ -19,9 +19,16 @@ public class KRDualSolver {
         this.states = LMC.distance.length;
         this.s = s;
         this.t = t;
+        this.solution = generate_solution();
+    }
 
-        PointValuePair solution = generate_solution();
-        this.solution = solution;
+    public KRDualSolver(double[][] distances, double[][] probabilities, int states, int s, int t) {
+        this.distances = distances;
+        this.probabilities = probabilities;
+        this.states = states;
+        this.s = s;
+        this.t = t;
+        this.solution = generate_solution();
     }
 
     private PointValuePair generate_solution() {
