@@ -22,56 +22,72 @@
  * @author Franck van Breugel
  */
 public class And extends Formula {
-    private Formula left;
-    private Formula right;	
-   
-    /**
-     * Initializes this formula as the conjunction of the given formulas.
-     *
-     * @param left the left subformula
-     * @param right the right subformula
-     */
-    public And(Formula left, Formula right) {
-	super();
-	this.left = left;
-	this.right = right;
-    }
+  private Formula left;
+  private Formula right;
 
-    /**
-     * Returns the left subformula.
-     *
-     * @return the left subformula
-     */
-    public Formula getLeft() {
-	return this.left;
-    }
+  /**
+   * Initializes this formula as the conjunction of the given formulas.
+   *
+   * @param left  the left subformula
+   * @param right the right subformula
+   */
+  public And(Formula left, Formula right) {
+    super();
+    this.left = left;
+    this.right = right;
+  }
 
-    /**
-     * Returns the right subformula.
-     *
-     * @return the right subformula
-     */
-    public Formula getRight() {
-	return this.right;
-    }
+  /**
+   * Returns the left subformula.
+   *
+   * @return the left subformula
+   */
+  public Formula getLeft() {
+    return this.left;
+  }
 
-    /**
-     * Returns the left subformula.
-     *
-     * @return the left subformula
-     */
-    @Override
-    public String toLaTeX() {
-	return this.left.toLaTeX() + " \\wedge " + this.right.toLaTeX();
-    }
+  /**
+   * Returns the right subformula.
+   *
+   * @return the right subformula
+   */
+  public Formula getRight() {
+    return this.right;
+  }
 
-    /**
-     * Returns a string representation of this formula.
-     *
-     * @return a string representation of this formula
-     */	
-    @Override
-    public String toString() {
-	return this.left.toString() + " && " + this.right.toString();
+  /**
+   * Returns the left subformula.
+   *
+   * @return the left subformula
+   */
+  @Override
+  public String toLaTeX() {
+    if ((this.left instanceof Identity) && (this.right instanceof Identity)) {
+      return "";
+    } else if ((this.left instanceof Identity) && !(this.right instanceof Identity)) {
+      return this.right.toLaTeX();
+    } else if ((this.right instanceof Identity) && !(this.left instanceof Identity)) {
+      return this.left.toLaTeX();
+    } else {
+      return "\\left(" + this.left.toLaTeX() + " \\wedge " + this.right.toLaTeX() + "\\right)";
     }
+  }
+
+  /**
+   * Returns a string representation of this formula.
+   *
+   * @return a string representation of this formula
+   */
+  @Override
+  public String toString() {
+    if ((this.left instanceof Identity) && (this.right instanceof Identity)) {
+      return "";
+    } else if ((this.left instanceof Identity) && !(this.right instanceof Identity)) {
+      return this.right.toString();
+    } else if ((this.right instanceof Identity) && !(this.left instanceof Identity)) {
+      return this.left.toString();
+    } else {
+      return "(" + this.left.toString() + " && " + this.right.toString() + ")";
+    }
+  }
 }

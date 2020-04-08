@@ -50,7 +50,7 @@ public class Label extends Formula {
      */	
     @Override
     public String toLaTeX() {
-	return "label" + this.label;
+      return "label\\_" + this.label;
     }
 	
    /**
@@ -60,6 +60,6 @@ public class Label extends Formula {
      */
     @Override
     public String toString() {
-	return "label" + this.label;
+      return "label_" + this.label;
     }
 }

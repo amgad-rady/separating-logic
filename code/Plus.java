@@ -16,64 +16,64 @@
  */
 
 /**
- * The formula shifted by some positive amount. 
+ * The formula shifted by some positive amount.
  *
  * @author Amgad Rady
  * @author Franck van Breugel
  */
 public class Plus extends Formula {
-    private Formula formula;
-    private double shift;
-	
-    /**
-     * Initializes this formula consisting of the given formula shifted by
-     * the given amount positively (adding). 
-     *
-     * @param formula a formula
-     * @param shift the shift amount  
-     * @pre. shift in [0, 1]
-     */
-    public Plus(Formula formula, double shift) {
-	super();
-	this.formula = formula;
-	this.shift = shift;
-    }
+  private Formula formula;
+  private double shift;
 
-    /**
-     * Returns the subformula of this formula.
-     *
-     * @return the subformula of this formula
-     */
-    public Formula getFormula() {
-	return this.formula;
-    }
+  /**
+   * Initializes this formula consisting of the given formula shifted by
+   * the given amount positively (adding).
+   *
+   * @param formula a formula
+   * @param shift   the shift amount
+   * @pre. shift in [0, 1]
+   */
+  public Plus(Formula formula, double shift) {
+    super();
+    this.formula = formula;
+    this.shift = shift;
+  }
 
-    /**
-     * Returns the shift amount.
+  /**
+   * Returns the subformula of this formula.
+   *
+   * @return the subformula of this formula
+   */
+  public Formula getFormula() {
+    return this.formula;
+  }
 
-     * @return the shift amount
-     */
-    public double getShift() {
-	return this.shift;
-    }
+  /**
+   * Returns the shift amount.
+   *
+   * @return the shift amount
+   */
+  public double getShift() {
+    return this.shift;
+  }
 
-    /**
-     * Returns a LaTeX representation of this formula.
-     *
-     * @return a LaTeX representation of this formula
-     */	
-    @Override
-    public String toLaTeX() {
-	return this.formula.toLaTeX() + " \\oplus " + this.shift;
-    }
-    
-    /**
-     * Returns a string representation of this formula.
-     *
-     * @return a string representation of this formula
-     */
-    @Override
-    public String toString() {
-	return this.formula.toString() + " + " + this.shift;
-    }
+  /**
+   * Returns a LaTeX representation of this formula.
+   *
+   * @return a LaTeX representation of this formula
+   */
+  @Override
+  public String toLaTeX() {
+    return "\\left(" + this.formula.toLaTeX() + " \\oplus " + this.shift + "\\right)";
+  }
+
+  /**
+   * Returns a string representation of this formula.
+   *
+   * @return a string representation of this formula
+   */
+  @Override
+  public String toString() {
+    return "(" + this.formula.toString() + " + " + this.shift + ")";
+  }
 }

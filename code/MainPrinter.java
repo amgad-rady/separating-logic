@@ -38,6 +38,7 @@ class MainPrinter {
       KR_dual = (new KRDualSolver(intermediate_distances, probabilities, states, s, t)).getKRdual();
       output.append(FormulaPrinter.formula_generator(s, t, n, states, labels,
         KR_dual, intermediate_distances, probabilities).toLaTeX());
+      output.append(" \\newline ");
 
       /*
       Compute the next distance matrix point-wise

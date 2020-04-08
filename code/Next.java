@@ -22,44 +22,44 @@
  * @author Franck van Breugel
  */
 public class Next extends Formula {
-    private Formula formula;
+  private Formula formula;
 
-    /**
-     * Initializes this next formula with the given subformula.
-     *
-     * @param formula the subformula
-     */
-    public Next(Formula formula) {
-	super();
-	this.formula = formula;
-    }
+  /**
+   * Initializes this next formula with the given subformula.
+   *
+   * @param formula the subformula
+   */
+  public Next(Formula formula) {
+    super();
+    this.formula = formula;
+  }
 
-    /**
-     * Returns the subformula of this next formula.
-     *
-     * @return the subformula of this next formula
-     */
-    public Formula getFormula() {
-	return this.formula;
-    }
+  /**
+   * Returns the subformula of this next formula.
+   *
+   * @return the subformula of this next formula
+   */
+  public Formula getFormula() {
+    return this.formula;
+  }
 
-    /**
-     * Returns a LaTeX representation of this formula.
-     *
-     * @return a LaTeX representation of this formula
-     */	
-    @Override
-    public String toLaTeX() {
-	return "\\bigcirc " + this.formula.toLaTeX();
-    }
+  /**
+   * Returns a LaTeX representation of this formula.
+   *
+   * @return a LaTeX representation of this formula
+   */
+  @Override
+  public String toLaTeX() {
+    return "\\bigcirc \\left(" + this.formula.toLaTeX() + "\\right)";
+  }
 
-    /**
-     * Returns a string representation of this formula.
-     *
-     * @return a string representation of this formula
-     */	
-    @Override
-    public String toString() {
-	return "O " + this.formula.toString();
-    }
+  /**
+   * Returns a string representation of this formula.
+   *
+   * @return a string representation of this formula
+   */
+  @Override
+  public String toString() {
+    return "O (" + this.formula.toString() + ")";
+  }
 }

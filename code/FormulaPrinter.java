@@ -36,7 +36,11 @@ public class FormulaPrinter {
         offset += KR_dual[u] * probabilities[s][u];
       }
 
-      return new Minus(new Next(conjunction), offset);
+      if (offset != 0) {
+        return new Minus(new Next(conjunction), offset);
+      } else {
+        return new Next(conjunction);
+      }
     }
   }
 }
