@@ -31,15 +31,15 @@ class MainPrinter {
     double[] KR_dual;
 
     StringBuffer output = new StringBuffer();
-    output.append("$$");
     for (int i = 0; i < n; i++) {
       /*
       Compute the KR dual
        */
       KR_dual = (new KRDualSolver(intermediate_distances, probabilities, states, s, t)).getKRdual();
+      output.append("$");
       output.append(FormulaPrinter.formula_generator(s, t, i, states, labels,
         KR_dual, intermediate_distances, probabilities).toLaTeX());
-      output.append("\n\n");
+      output.append("$\n\n");
 
       /*
       Compute the next distance matrix point-wise
@@ -54,8 +54,6 @@ class MainPrinter {
       }
       intermediate_distances = new_distances;
     }
-
-    output.append("$$");
     return output.toString();
   }
 }

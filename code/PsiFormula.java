@@ -36,28 +36,10 @@ public class PsiFormula {
       throw new IllegalArgumentException("n cannot be negative");
     }
 
-    Formula phi;
-    if (u == v) {
-      return new True();
-    } else if (labels[u] != labels[v]) {
-      phi = new Label(u);
-    } else if (n == 0 && labels[u] == labels[v]) {
-      phi = new True();
-    } else {
-      phi = new Phi(u, v, n);
-    }
-
-    double first_factor = distances[u][v] - Math.abs(KR_dual[u] - KR_dual[v]);
-    double second_factor = Math.min(KR_dual[u], KR_dual[v]);
-
-    if (first_factor == 0 && second_factor == 0) {
-      return phi;
-    } else if (first_factor != 0 && second_factor == 0) {
-      return new Minus(phi, first_factor);
-    } else if (first_factor == 0 && second_factor != 0) {
-      return new Plus(phi, second_factor);
-    } else {
-      return new Plus(new Minus(phi, first_factor), second_factor);
-    }
+    return Constructor.formula_constructor("Plus",
+      Constructor.formula_constructor("Minus",
+        Constructor.formula_constructor(u, v, n, labels),
+        distances[u][v] - Math.abs(KR_dual[u] - KR_dual[v])),
+      Math.min(KR_dual[u], KR_dual[v]));
   }
 }
