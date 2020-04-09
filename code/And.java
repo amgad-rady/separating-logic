@@ -62,15 +62,7 @@ public class And extends Formula {
    */
   @Override
   public String toLaTeX() {
-    if ((this.left instanceof Identity) && (this.right instanceof Identity)) {
-      return "";
-    } else if ((this.left instanceof Identity) && !(this.right instanceof Identity)) {
-      return this.right.toLaTeX();
-    } else if ((this.right instanceof Identity) && !(this.left instanceof Identity)) {
-      return this.left.toLaTeX();
-    } else {
-      return "\\left(" + this.left.toLaTeX() + " \\wedge " + this.right.toLaTeX() + "\\right)";
-    }
+    return "\\left(" + this.left.toLaTeX() + " \\wedge " + this.right.toLaTeX() + "\\right)";
   }
 
   /**
@@ -80,14 +72,6 @@ public class And extends Formula {
    */
   @Override
   public String toString() {
-    if ((this.left instanceof Identity) && (this.right instanceof Identity)) {
-      return "";
-    } else if ((this.left instanceof Identity) && !(this.right instanceof Identity)) {
-      return this.right.toString();
-    } else if ((this.right instanceof Identity) && !(this.left instanceof Identity)) {
-      return this.left.toString();
-    } else {
-      return "(" + this.left.toString() + " && " + this.right.toString() + ")";
-    }
+    return "(" + this.left.toString() + " && " + this.right.toString() + ")";
   }
 }

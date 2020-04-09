@@ -103,6 +103,6 @@ public class Main {
 
   public static void main(String[] args) throws FileNotFoundException {
     LabelledMarkovChain chain = read_input();
-    System.out.println(MainPrinter.print(chain, 2, 0, 1));
+    System.out.println(MainPrinter.print(chain, 3, 0, 1));
   }
 }

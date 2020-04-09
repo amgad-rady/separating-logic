@@ -38,7 +38,7 @@ public class PsiFormula {
 
     Formula phi;
     if (u == v) {
-      return new Identity();
+      return new True();
     } else if (labels[u] != labels[v]) {
       phi = new Label(u);
     } else if (n == 0 && labels[u] == labels[v]) {
