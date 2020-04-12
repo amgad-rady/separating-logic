@@ -22,7 +22,14 @@
  * @author Franck van Breugel
  */
 public abstract class Formula {
-    
+
+    /**
+     * Returns a simplification of this formula that is semantically equivalent to this formula.
+     *
+     * @return a simplification of this formula
+     */
+    public Formula simplify();
+
     /**
      * Returns a LaTeX representation of this formula.
      *
