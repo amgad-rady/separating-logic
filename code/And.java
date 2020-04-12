@@ -60,6 +60,7 @@ public class And extends Formula {
      *
      * @return a simplification of this formula
      */
+    @Override
     public Formula simplify() {
 	Formula simplifiedLeft = this.left.simplify();
 	Formula simplifiedRight = this.right.simplify();
