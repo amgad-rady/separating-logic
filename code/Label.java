@@ -44,6 +44,16 @@ public class Label extends Formula {
     }
 
     /**
+     * Returns a simplification of this formula that is semantically equivalent to this formula.
+     *
+     * @return a simplification of this formula
+     */
+    @Override
+    public Formula simplify() {
+        return this;
+    }
+
+    /**
      * Returns a LaTeX representation of this formula.
      *
      * @return a LaTeX representation of this formula
