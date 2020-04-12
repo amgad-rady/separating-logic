@@ -28,7 +28,7 @@ public abstract class Formula {
      *
      * @return a simplification of this formula
      */
-    public Formula simplify();
+    public abstract Formula simplify();
 
     /**
      * Returns a LaTeX representation of this formula.
