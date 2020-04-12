@@ -57,6 +57,26 @@ public class Plus extends Formula {
     return this.shift;
   }
 
+    /**
+     * Returns a simplification of this formula that is semantically equivalent to this formula.
+     *
+     * @return a simplification of this formula
+     */
+    @Override
+    public Formula simplify() {
+        Formula simpliedFormula = this.formula.simplify();
+
+        if (simpliedFormula instanceof False) {
+	    return simpliedFormula;
+        } else if (this.shift == 0) {
+	    return simpliedFormula;
+        } else if (this.shift == 1) {
+	    return new False();
+        } else {
+	    return new Plus(simpliedFormula, this.shift);
+        }
+    }
+
   /**
    * Returns a LaTeX representation of this formula.
    *
