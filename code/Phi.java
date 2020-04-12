@@ -25,6 +25,6 @@ public class Phi extends Formula {
 
     @Override
     public String toLaTeX() {
-        return String.format("\\phi_{%d, %d}^{%d}", this.s, this.t, this.n);
+        return String.format("\\varphi_{%d, %d}^{%d}", this.s, this.t, this.n);
     }
 }

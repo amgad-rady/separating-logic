@@ -50,7 +50,7 @@ public class Next extends Formula {
    */
   @Override
   public String toLaTeX() {
-    return "\\bigcirc{\\left(" + this.formula.toLaTeX() + "\\right)}";
+    return "\\bigcirc" + this.formula.toLaTeX();
   }
 
   /**
@@ -60,6 +60,6 @@ public class Next extends Formula {
    */
   @Override
   public String toString() {
-    return "O (" + this.formula.toString() + ")";
+    return "O [" + this.formula.toString() + "]";
   }
 }
