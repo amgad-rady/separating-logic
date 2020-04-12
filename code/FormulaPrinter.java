@@ -20,7 +20,11 @@ public class FormulaPrinter {
     if (n < 0) {
       throw new IllegalArgumentException("n cannot be negative");
     } else if (n == 0) {
-      return new True();
+      if (labels[s] == labels[t]) {
+        return new True();
+      } else {
+        return new Label(labels[s]);
+      }
     } else {
       Formula conjunction = new True();
       for (int u = 0; u < states; u++) {

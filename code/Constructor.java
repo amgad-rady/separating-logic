@@ -63,10 +63,10 @@ public class Constructor {
   }
 
   public static Formula formula_constructor(int first_index, int second_index, int iteration, int[] labels) {
-    if ((iteration == 0) || (first_index == second_index)) {
-      return new True();
-    } else if (labels[first_index] != labels[second_index]) {
+    if (labels[first_index] != labels[second_index]) {
       return new Label(labels[first_index]);
+    } else if ((iteration == 0) || (first_index == second_index)) {
+      return new True();
     } else {
       return new Phi(first_index, second_index, iteration);
     }
