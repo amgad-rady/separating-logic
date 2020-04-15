@@ -60,7 +60,7 @@ public class Label extends Formula {
    */
   @Override
   public String toLaTeX() {
-    return "\\mathrm{label}\\_" + this.label;
+    return "\\ell_" + this.label;
   }
 
   /**

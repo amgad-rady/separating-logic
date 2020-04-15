@@ -36,9 +36,20 @@ public class PsiFormula {
       throw new IllegalArgumentException("n cannot be negative");
     }
 
+    int first_index;
+    int second_index;
+
+    if (KR_dual[u] <= KR_dual[v]) {
+      first_index = u;
+      second_index = v;
+    } else {
+      first_index = v;
+      second_index = u;
+    }
+
     return (new Plus(
       new Minus(
-        formula_constructor(u, v, n, labels),
+        formula_constructor(first_index, second_index, n, labels),
         distances[u][v] - Math.abs(KR_dual[u] - KR_dual[v])),
       Math.min(KR_dual[u], KR_dual[v]))).simplify();
   }
