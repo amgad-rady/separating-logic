@@ -39,13 +39,13 @@ public class LabelledMarkovChainTest {
     }
 
     *//**
-     * Reads the transition probabilities from the given file.
-     *
-     * @param file the name of the file
-     * @throws FileNotFoundException if the given file cannot be read
-     * @throws InputMismatchException if the given file contains not the right type of data
-     * @throws NoSuchElementException if the given file contains not enough data
-     *//*
+   * Reads the transition probabilities from the given file.
+   *
+   * @param file the name of the file
+   * @throws FileNotFoundException if the given file cannot be read
+   * @throws InputMismatchException if the given file contains not the right type of data
+   * @throws NoSuchElementException if the given file contains not enough data
+   *//*
     private static void readProbabilities(String file) throws FileNotFoundException, InputMismatchException, NoSuchElementException {
 	try {
 	    Scanner input = new Scanner(new File(file));
@@ -72,13 +72,13 @@ public class LabelledMarkovChainTest {
     }
 
     *//**
-     * Reads the labelling from the given file.
-     *
-     * @param file the name of the file
-     * @throws FileNotFoundException if the given file cannot be read
-     * @throws InputMismatchException if the given file contains not the right type of data
-     * @throws NoSuchElementException if the given file contains not enough data
-     *//*
+   * Reads the labelling from the given file.
+   *
+   * @param file the name of the file
+   * @throws FileNotFoundException if the given file cannot be read
+   * @throws InputMismatchException if the given file contains not the right type of data
+   * @throws NoSuchElementException if the given file contains not enough data
+   *//*
     private static void readLabels(String file) throws FileNotFoundException, InputMismatchException, NoSuchElementException {
 	try {
 	    Scanner input = new Scanner(new File(file));
@@ -100,13 +100,13 @@ public class LabelledMarkovChainTest {
     }
 
     *//**
-     * Reads the distances from the given file.
-     *
-     * @param file the name of the file
-     * @throws FileNotFoundException if the given file cannot be read
-     * @throws InputMismatchException if the given file contains not the right type of data
-     * @throws NoSuchElementException if the given file contains not enough data
-     *//*
+   * Reads the distances from the given file.
+   *
+   * @param file the name of the file
+   * @throws FileNotFoundException if the given file cannot be read
+   * @throws InputMismatchException if the given file contains not the right type of data
+   * @throws NoSuchElementException if the given file contains not enough data
+   *//*
     private static void readDistances(String file) throws FileNotFoundException, InputMismatchException, NoSuchElementException {
 	try {
 	    Scanner input = new Scanner(new File(file));

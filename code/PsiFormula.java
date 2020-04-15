@@ -36,10 +36,20 @@ public class PsiFormula {
       throw new IllegalArgumentException("n cannot be negative");
     }
 
-    return Constructor.formula_constructor("Plus",
-      Constructor.formula_constructor("Minus",
-        Constructor.formula_constructor(u, v, n, labels),
+    return (new Plus(
+      new Minus(
+        formula_constructor(u, v, n, labels),
         distances[u][v] - Math.abs(KR_dual[u] - KR_dual[v])),
-      Math.min(KR_dual[u], KR_dual[v]));
+      Math.min(KR_dual[u], KR_dual[v]))).simplify();
+  }
+
+  public static Formula formula_constructor(int first_index, int second_index, int iteration, int[] labels) {
+    if (labels[first_index] != labels[second_index]) {
+      return new Label(labels[first_index]);
+    } else if ((iteration == 0) || (first_index == second_index)) {
+      return new True();
+    } else {
+      return new Phi(first_index, second_index, iteration);
+    }
   }
 }

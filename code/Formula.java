@@ -23,17 +23,17 @@
  */
 public abstract class Formula {
 
-    /**
-     * Returns a simplification of this formula that is semantically equivalent to this formula.
-     *
-     * @return a simplification of this formula
-     */
-    public abstract Formula simplify();
+  /**
+   * Returns a simplification of this formula that is semantically equivalent to this formula.
+   *
+   * @return a simplification of this formula
+   */
+  public abstract Formula simplify();
 
-    /**
-     * Returns a LaTeX representation of this formula.
-     *
-     * @return a LaTeX representation of this formula
-     */	
-    public abstract String toLaTeX();
+  /**
+   * Returns a LaTeX representation of this formula.
+   *
+   * @return a LaTeX representation of this formula
+   */
+  public abstract String toLaTeX();
 }

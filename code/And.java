@@ -55,28 +55,28 @@ public class And extends Formula {
     return this.right;
   }
 
-    /**
-     * Returns a simplification of this formula that is semantically equivalent to this formula.
-     *
-     * @return a simplification of this formula
-     */
-    @Override
-    public Formula simplify() {
-	Formula simplifiedLeft = this.left.simplify();
-	Formula simplifiedRight = this.right.simplify();
+  /**
+   * Returns a simplification of this formula that is semantically equivalent to this formula.
+   *
+   * @return a simplification of this formula
+   */
+  @Override
+  public Formula simplify() {
+    Formula simplifiedLeft = this.left.simplify();
+    Formula simplifiedRight = this.right.simplify();
 
-	if ((simplifiedLeft instanceof False) || (simplifiedRight instanceof False)) {
-	    return new False();
-        } else if ((simplifiedLeft instanceof True) && (simplifiedRight instanceof True)) {
-	    return new True();
-        } else if (simplifiedLeft instanceof True) {
-	    return simplifiedRight;
-        } else if (simplifiedRight instanceof True) {
-	    return simplifiedLeft;
-        } else {
-	    return new And(simplifiedLeft, simplifiedRight);
-        }
+    if ((simplifiedLeft instanceof False) || (simplifiedRight instanceof False)) {
+      return new False();
+    } else if ((simplifiedLeft instanceof True) && (simplifiedRight instanceof True)) {
+      return new True();
+    } else if (simplifiedLeft instanceof True) {
+      return simplifiedRight;
+    } else if (simplifiedRight instanceof True) {
+      return simplifiedLeft;
+    } else {
+      return new And(simplifiedLeft, simplifiedRight);
     }
+  }
 
   /**
    * Returns the left subformula.

@@ -22,54 +22,54 @@
  * @author Franck van Breugel
  */
 public class Label extends Formula {
-    private int label; // the index of the label
+  private int label; // the index of the label
 
-    /**
-     * Initializes this formula representing a label with the given index.
-     *
-     * @param label the index of the label
-     */
-    public Label(int label) {
-	super();
-	this.label = label;
-    }
+  /**
+   * Initializes this formula representing a label with the given index.
+   *
+   * @param label the index of the label
+   */
+  public Label(int label) {
+    super();
+    this.label = label;
+  }
 
-    /**
-     * Returns the index of the label.
-     *
-     * @return the index of the label
-     */
-    public int getLabel() {
-	return this.label;
-    }
+  /**
+   * Returns the index of the label.
+   *
+   * @return the index of the label
+   */
+  public int getLabel() {
+    return this.label;
+  }
 
-    /**
-     * Returns a simplification of this formula that is semantically equivalent to this formula.
-     *
-     * @return a simplification of this formula
-     */
-    @Override
-    public Formula simplify() {
-        return this;
-    }
+  /**
+   * Returns a simplification of this formula that is semantically equivalent to this formula.
+   *
+   * @return a simplification of this formula
+   */
+  @Override
+  public Formula simplify() {
+    return this;
+  }
 
-    /**
-     * Returns a LaTeX representation of this formula.
-     *
-     * @return a LaTeX representation of this formula
-     */	
-    @Override
-    public String toLaTeX() {
-      return "\\mathrm{label}\\_" + this.label;
-    }
-	
-   /**
-     * Returns a string representation of this formula.
-     *
-     * @return a string representation of this formula
-     */
-    @Override
-    public String toString() {
-      return "label_" + this.label;
-    }
+  /**
+   * Returns a LaTeX representation of this formula.
+   *
+   * @return a LaTeX representation of this formula
+   */
+  @Override
+  public String toLaTeX() {
+    return "\\mathrm{label}\\_" + this.label;
+  }
+
+  /**
+   * Returns a string representation of this formula.
+   *
+   * @return a string representation of this formula
+   */
+  @Override
+  public String toString() {
+    return "label_" + this.label;
+  }
 }

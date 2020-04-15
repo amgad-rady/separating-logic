@@ -57,25 +57,25 @@ public class Minus extends Formula {
     return this.shift;
   }
 
-    /**
-     * Returns a simplification of this formula that is semantically equivalent to this formula.
-     *
-     * @return a simplification of this formula
-     */
-    @Override
-    public Formula simplify() {
-	Formula simpliedFormula = this.formula.simplify();
+  /**
+   * Returns a simplification of this formula that is semantically equivalent to this formula.
+   *
+   * @return a simplification of this formula
+   */
+  @Override
+  public Formula simplify() {
+    Formula simpliedFormula = this.formula.simplify();
 
-	if (simpliedFormula instanceof True) {
-	    return simpliedFormula;
-	} else if (this.shift == 0) {
-	    return simpliedFormula;
-	} else if (this.shift == 1) {
-	    return new True();
-	} else {
-	    return new Minus(simpliedFormula, this.shift);
-	}
+    if (simpliedFormula instanceof True) {
+      return simpliedFormula;
+    } else if (this.shift == 0) {
+      return simpliedFormula;
+    } else if (this.shift == 1) {
+      return new True();
+    } else {
+      return new Minus(simpliedFormula, this.shift);
     }
+  }
 
   /**
    * Returns a LaTeX representation of this formula.

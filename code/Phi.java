@@ -1,30 +1,35 @@
 public class Phi extends Formula {
-    private int s;
-    private int t;
-    private int n;
+  private int s;
+  private int t;
+  private int n;
 
-    public Phi(int first, int second, int iteration) {
-        super();
-        this.s = first;
-        this.t = second;
-        this.n = iteration;
-    }
+  public Phi(int first, int second, int iteration) {
+    super();
+    this.s = first;
+    this.t = second;
+    this.n = iteration;
+  }
 
-    public int[] getPhi() {
-        int[] x = new int[3];
-        x[0] = this.s;
-        x[1] = this.t;
-        x[2] = this.n;
-        return x;
-    }
+  public int[] getPhi() {
+    int[] x = new int[3];
+    x[0] = this.s;
+    x[1] = this.t;
+    x[2] = this.n;
+    return x;
+  }
 
-    @Override
-    public String toString() {
-        return String.format("Phi{%d, %d, %d}", this.s, this.t, this.n);
-    }
+  @Override
+  public String toString() {
+    return String.format("Phi{%d, %d, %d}", this.s, this.t, this.n);
+  }
 
-    @Override
-    public String toLaTeX() {
-        return String.format("\\varphi_{%d, %d}^{%d}", this.s, this.t, this.n);
-    }
+  @Override
+  public Formula simplify() {
+    return this;
+  }
+
+  @Override
+  public String toLaTeX() {
+    return String.format("\\varphi_{%d, %d}^{%d}", this.s, this.t, this.n);
+  }
 }

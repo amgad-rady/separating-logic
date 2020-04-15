@@ -30,11 +30,11 @@ public class FormulaPrinter {
       for (int u = 0; u < states; u++) {
         Formula disjunction = new False();
         for (int v = 0; v < states; v++) {
-          disjunction = Constructor.formula_constructor("Or",
+          disjunction = (new Or(
             PsiFormula.generate_formula(u, v, n - 1, labels, KR_dual, distances),
-            disjunction);
+            disjunction)).simplify();
         }
-        conjunction = Constructor.formula_constructor("And", disjunction, conjunction);
+        conjunction = (new And(disjunction, conjunction)).simplify();
       }
 
       double offset = 0;
@@ -42,7 +42,7 @@ public class FormulaPrinter {
         offset += KR_dual[u] * probabilities[s][u];
       }
 
-      return Constructor.formula_constructor("Minus", new Next(conjunction), offset);
+      return (new Minus(new Next(conjunction), offset)).simplify();
     }
   }
 }

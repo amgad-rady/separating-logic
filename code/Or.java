@@ -55,28 +55,28 @@ public class Or extends Formula {
     return this.right;
   }
 
-    /**
-     * Returns a simplification of this formula that is semantically equivalent to this formula.
-     *
-     * @return a simplification of this formula
-     */
-    @Override
-    public Formula simplify() {
-        Formula simplifiedLeft = this.left.simplify();
-        Formula simplifiedRight = this.right.simplify();
+  /**
+   * Returns a simplification of this formula that is semantically equivalent to this formula.
+   *
+   * @return a simplification of this formula
+   */
+  @Override
+  public Formula simplify() {
+    Formula simplifiedLeft = this.left.simplify();
+    Formula simplifiedRight = this.right.simplify();
 
-	if ((simplifiedLeft instanceof True) || (simplifiedRight instanceof True)) {
-	    return new True();
-        } else if ((simplifiedLeft instanceof False) && (simplifiedRight instanceof False)) {
-	    return new False();
-        } else if ((simplifiedLeft instanceof False)) {
-	    return simplifiedRight;
-        } else if ((simplifiedRight instanceof False)) {
-	    return simplifiedLeft;
-        } else {
-	    return new Or(simplifiedLeft, simplifiedRight);
-        }
+    if ((simplifiedLeft instanceof True) || (simplifiedRight instanceof True)) {
+      return new True();
+    } else if ((simplifiedLeft instanceof False) && (simplifiedRight instanceof False)) {
+      return new False();
+    } else if ((simplifiedLeft instanceof False)) {
+      return simplifiedRight;
+    } else if ((simplifiedRight instanceof False)) {
+      return simplifiedLeft;
+    } else {
+      return new Or(simplifiedLeft, simplifiedRight);
     }
+  }
 
   /**
    * Returns a LaTeX representation of this formula.

@@ -22,40 +22,40 @@
  * @author Franck van Breugel
  */
 public class True extends Formula {
-    /**
-     * Initializes this formula.
-     */
-    public True() {
-	super();
-    }
+  /**
+   * Initializes this formula.
+   */
+  public True() {
+    super();
+  }
 
-    /**
-     * Returns a simplification of this formula that is semantically equivalent to this formula.
-     *
-     * @return a simplification of this formula
-     */
-    @Override
-    public Formula simplify() {
-        return this;
-    }
+  /**
+   * Returns a simplification of this formula that is semantically equivalent to this formula.
+   *
+   * @return a simplification of this formula
+   */
+  @Override
+  public Formula simplify() {
+    return this;
+  }
 
-    /**
-     * Returns a LaTeX representation of this formula.
-     *
-     * @return a LaTeX representation of this formula
-     */	
-    @Override
-    public String toLaTeX() {
-	return "\\mathrm{true}";
-    }
+  /**
+   * Returns a LaTeX representation of this formula.
+   *
+   * @return a LaTeX representation of this formula
+   */
+  @Override
+  public String toLaTeX() {
+    return "\\mathrm{true}";
+  }
 
-    /**
-     * Returns a string representation of this formula.
-     *
-     * @return a string representation of this formula
-     */
-    @Override
-    public String toString() {
-	return "true";
-    }
+  /**
+   * Returns a string representation of this formula.
+   *
+   * @return a string representation of this formula
+   */
+  @Override
+  public String toString() {
+    return "true";
+  }
 }

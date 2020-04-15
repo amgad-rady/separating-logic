@@ -43,15 +43,15 @@ public class Next extends Formula {
     return this.formula;
   }
 
-    /**
-     * Returns a simplification of this formula that is semantically equivalent to this formula.
-     *
-     * @return a simplification of this formula
-     */
-    @Override
-    public Formula simplify() {
-	return this;
-    }
+  /**
+   * Returns a simplification of this formula that is semantically equivalent to this formula.
+   *
+   * @return a simplification of this formula
+   */
+  @Override
+  public Formula simplify() {
+    return this;
+  }
 
   /**
    * Returns a LaTeX representation of this formula.
