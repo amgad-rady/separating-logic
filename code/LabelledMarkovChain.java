@@ -15,6 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -117,14 +118,7 @@ public class LabelledMarkovChain {
     return s.toString();
   }
 
-  /**
-   * Returns the value of the given formula in the given state of this labelled Markov chain.
-   *
-   * @param formula a formula
-   * @param state   a state
-   * @return the value of the given formula in the given state of this labelled Markov chain
-   */
-  public double valueOf(Formula formula, int state) {
+  public double valueOf(Formula formula, int state, double[][][] KR) {
     if (formula instanceof True) {
       return 0.0;
     } else if (formula instanceof False) {
@@ -138,26 +132,122 @@ public class LabelledMarkovChain {
       }
     } else if (formula instanceof Minus) {
       Minus minus = (Minus) formula;
-      return Math.max(0.0, this.valueOf(minus.getFormula(), state) - minus.getShift());
+      return Math.max(0.0, this.valueOf(minus.getFormula(), state, KR) - minus.getShift());
     } else if (formula instanceof Plus) {
       Plus plus = (Plus) formula;
-      return Math.min(1.0, this.valueOf(plus.getFormula(), state) + plus.getShift());
+      return Math.min(1.0, this.valueOf(plus.getFormula(), state, KR) + plus.getShift());
     } else if (formula instanceof And) {
       And and = (And) formula;
-      return Math.max(this.valueOf(and.getLeft(), state), this.valueOf(and.getRight(), state));
+      return Math.max(this.valueOf(and.getLeft(), state, KR), this.valueOf(and.getRight(), state, KR));
     } else if (formula instanceof Or) {
       Or or = (Or) formula;
-      return Math.min(this.valueOf(or.getLeft(), state), this.valueOf(or.getRight(), state));
+      return Math.min(this.valueOf(or.getLeft(), state, KR), this.valueOf(or.getRight(), state, KR));
     } else if (formula instanceof Next) {
       Next next = (Next) formula;
       double sum = 0.0;
       for (int target = 0; target < this.probability[state].length; target++) {
-        sum += probability[state][target] * this.valueOf(next.getFormula(), target);
+        sum += probability[state][target] * this.valueOf(next.getFormula(), target, KR);
+      }
+      return sum;
+    } else if (formula instanceof Phi) {
+      Phi phi = (Phi) formula;
+
+      int nStates = this.label.length;
+      int s = phi.getPhi()[0];
+      int t = phi.getPhi()[1];
+      double[] tau_s = this.probability[s];
+      double[] tau_u = this.probability[state];
+
+      double sum = 0.0;
+      for (int target = 0; target < nStates; target++) {
+        sum += KR[s][t][target] * (tau_u[target] - tau_s[target]);
       }
       return sum;
     } else {
       throw new RuntimeException("Trying to compute the value of formula of unknown type");
     }
+  }
+
+
+  /**
+   * Print iterations stepwise separating formulas
+   *
+   * @param n number of iterations
+   * @param s first state
+   * @param t second state
+   * @return string containing stepwise separating formulas
+   */
+  public String printEvaluations(int n, int s, int t) {
+    /*
+    We need matrices of distances and KR duals for at least two levels.
+     */
+    double[][] probabilities = this.probability;
+    int[] labels = this.label;
+    int states = this.label.length;
+    double[][] distances = this.distance;
+
+    double[][] diminus1 = new double[states][states];
+    double[][] di = new double[states][states];
+    double[][] diplus1 = new double[states][states];
+
+    for (int u = 0; u < states; u++) {
+      for (int v = 0; v < states; v++) {
+        if (labels[u] != labels[v]) {
+          diplus1[u][v] = 1.0;
+        }
+      }
+    }
+
+    double[][][] KRiminus1 = new double[states][states][states];
+    double[][][] KRiplus1 = new double[states][states][states];
+    for (int u = 0; u < states; u++) {
+      for (int v = 0; v < states; v++) {
+        KRiplus1[u][v] = (new KRDualSolver(diplus1, probabilities, states, u, v)).getKRdual();
+      }
+    }
+
+    StringBuffer output = new StringBuffer();
+    for (int i = 0; i < n; i++) {
+
+      Formula phi = FormulaPrinter.formula_generator(s, t, i, states, labels, KRiplus1[s][t],
+        diplus1, probabilities);
+      double val = this.valueOf(phi, t, KRiminus1);
+
+      output.append("$");
+      output.append(phi.toLaTeX() + "$");
+      output.append("\n\n" + val + "\n\n");
+      /*
+      Compute the next distance matrix point-wise
+       */
+      for (int u = 0; u < states; u++) {
+        diminus1[u] = Arrays.copyOf(di[u], states);
+        di[u] = Arrays.copyOf(diplus1[u], states);
+      }
+
+      for (int u = 0; u < states; u++) {
+        for (int v = 0; v < states; v++) {
+          if (distances[u][v] != 0 && labels[u] == labels[v]) {
+            OptimalCouplingComputer o = new OptimalCouplingComputer(u, v, probabilities, di);
+            diplus1[u][v] = o.compute_distance();
+          }
+        }
+      }
+      for (int u = 0; u < states; u++) {
+        for (int v = 0; v < states; v++) {
+          KRDualSolver k = new KRDualSolver(diminus1, probabilities, states, u, v);
+          KRiminus1[u][v] = k.getKRdual();
+        }
+      }
+
+      for (int u = 0; u < states; u++) {
+        for (int v = 0; v < states; v++) {
+          KRDualSolver k = new KRDualSolver(diplus1, probabilities, states, s, t);
+          KRiplus1[u][v] = k.getKRdual();
+        }
+      }
+
+    }
+    return output.toString();
   }
 
   /**

@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -6,7 +7,7 @@ public class OptimalCouplingComputer {
   final int n;
   final int m;
   final double[][] initial_flow;
-  final private double[][] distances;
+  private double[][] distances;
   final double[][] costs;
 
   final double delta = 1e-10; //a precision factor to test approximate equality
@@ -15,7 +16,10 @@ public class OptimalCouplingComputer {
   double[][] capacity;
 
   public OptimalCouplingComputer(int s, int t, double[][] probabilities, double[][] distances) {
-    this.distances = distances;
+    this.distances = new double[distances[0].length][];
+    for (int u = 0; u < distances[0].length; u++) {
+      this.distances[u] = Arrays.copyOf(distances[u], distances[0].length);
+    }
 
     BipartitieGraph graph = new BipartitieGraph(new LinkedList<>(), new LinkedList<>());
 
@@ -97,7 +101,6 @@ public class OptimalCouplingComputer {
         assert this.graph != null;
         int k = this.graph.left.get(i).state;
         int l = this.graph.right.get(j - n).state;
-        assert distances != null;
         costs[i][j] = distances[k][l];
         costs[j][i] = -distances[k][l];
       }
