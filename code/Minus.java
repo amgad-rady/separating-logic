@@ -84,7 +84,7 @@ public class Minus extends Formula {
    */
   @Override
   public String toLaTeX() {
-    return "\\left\\{" + this.formula.toLaTeX() + " \\ominus " + this.shift + "\\right\\}";
+    return "\\left\\{" + this.formula.toLaTeX() + " \\ominus " + this.shift +  "\\right\\}";
   }
 
   /**

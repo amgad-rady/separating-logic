@@ -50,8 +50,8 @@ public class PsiFormula {
     return (new Plus(
       new Minus(
         formula_constructor(first_index, second_index, n, labels),
-        distances[u][v] - Math.abs(KR_dual[u] - KR_dual[v])),
-      Math.min(KR_dual[u], KR_dual[v]))).simplify();
+        distances[first_index][second_index] - Math.abs(KR_dual[second_index] - KR_dual[first_index])),
+      Math.min(KR_dual[first_index], KR_dual[second_index]))).simplify();
   }
 
   public static Formula formula_constructor(int first_index, int second_index, int iteration, int[] labels) {

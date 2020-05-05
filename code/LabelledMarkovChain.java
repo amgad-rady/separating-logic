@@ -186,32 +186,35 @@ public class LabelledMarkovChain {
     int states = this.label.length;
     double[][] distances = this.distance;
 
+    double[][] diminus2 = new double[states][states];
     double[][] diminus1 = new double[states][states];
     double[][] di = new double[states][states];
-    double[][] diplus1 = new double[states][states];
 
     for (int u = 0; u < states; u++) {
       for (int v = 0; v < states; v++) {
         if (labels[u] != labels[v]) {
-          diplus1[u][v] = 1.0;
+          di[u][v] = 1.0;
         }
       }
     }
 
-    double[][][] KRiminus1 = new double[states][states][states];
-    double[][][] KRiplus1 = new double[states][states][states];
+    double[][][] KRminus2 = new double[states][states][states];
+    double[][][] KRminus1 = new double[states][states][states];
+    double[][][] KR = new double[states][states][states];
     for (int u = 0; u < states; u++) {
       for (int v = 0; v < states; v++) {
-        KRiplus1[u][v] = (new KRDualSolver(diplus1, probabilities, states, u, v)).getKRdual();
+        KRminus2[u][v] = (new KRDualSolver(diminus2, probabilities, states, u, v)).getKRdual();
+        KRminus1[u][v] = (new KRDualSolver(diminus1, probabilities, states, u, v)).getKRdual();
+        KR[u][v] = (new KRDualSolver(di, probabilities, states, u, v)).getKRdual();
       }
     }
 
     StringBuffer output = new StringBuffer();
     for (int i = 0; i < n; i++) {
 
-      Formula phi = FormulaPrinter.formula_generator(s, t, i, states, labels, KRiplus1[s][t],
-        diplus1, probabilities);
-      double val = this.valueOf(phi, t, KRiminus1);
+      Formula phi = FormulaPrinter.formula_generator(s, t, i, states, labels, KRminus1[s][t],
+        diminus1, probabilities);
+      double val = this.valueOf(phi, t, KRminus2);
 
       output.append("$");
       output.append(phi.toLaTeX() + "$");
@@ -220,29 +223,36 @@ public class LabelledMarkovChain {
       Compute the next distance matrix point-wise
        */
       for (int u = 0; u < states; u++) {
+        diminus2[u] = Arrays.copyOf(diminus1[u], states);
         diminus1[u] = Arrays.copyOf(di[u], states);
-        di[u] = Arrays.copyOf(diplus1[u], states);
       }
 
       for (int u = 0; u < states; u++) {
         for (int v = 0; v < states; v++) {
           if (distances[u][v] != 0 && labels[u] == labels[v]) {
-            OptimalCouplingComputer o = new OptimalCouplingComputer(u, v, probabilities, di);
-            diplus1[u][v] = o.compute_distance();
+            OptimalCouplingComputer o = new OptimalCouplingComputer(u, v, probabilities, diminus1);
+            di[u][v] = o.compute_distance();
           }
         }
       }
       for (int u = 0; u < states; u++) {
         for (int v = 0; v < states; v++) {
-          KRDualSolver k = new KRDualSolver(diminus1, probabilities, states, u, v);
-          KRiminus1[u][v] = k.getKRdual();
+          KRDualSolver k = new KRDualSolver(diminus2, probabilities, states, u, v);
+          KRminus2[u][v] = k.getKRdual();
         }
       }
 
       for (int u = 0; u < states; u++) {
         for (int v = 0; v < states; v++) {
-          KRDualSolver k = new KRDualSolver(diplus1, probabilities, states, s, t);
-          KRiplus1[u][v] = k.getKRdual();
+          KRDualSolver k = new KRDualSolver(diminus1, probabilities, states, s, t);
+          KRminus1[u][v] = k.getKRdual();
+        }
+      }
+
+      for (int u = 0; u < states; u++) {
+        for (int v = 0; v < states; v++) {
+          KRDualSolver k = new KRDualSolver(di, probabilities, states, s, t);
+          KR[u][v] = k.getKRdual();
         }
       }
 
