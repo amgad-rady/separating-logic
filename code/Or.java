@@ -85,7 +85,7 @@ public class Or extends Formula {
    */
   @Override
   public String toLaTeX() {
-    return "\\left(" + this.left.toLaTeX() + " \\vee " + this.right.toLaTeX() + "\\right)";
+    return "(" + this.left.toLaTeX() + " \\vee " + this.right.toLaTeX() + ")";
   }
 
   /**

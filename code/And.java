@@ -85,7 +85,7 @@ public class And extends Formula {
    */
   @Override
   public String toLaTeX() {
-    return "\\left(" + this.left.toLaTeX() + " \\wedge " + this.right.toLaTeX() + "\\right)";
+    return "(" + this.left.toLaTeX() + " \\wedge " + this.right.toLaTeX() + ")";
   }
 
   /**

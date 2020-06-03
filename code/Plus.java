@@ -84,7 +84,7 @@ public class Plus extends Formula {
    */
   @Override
   public String toLaTeX() {
-    return "\\left(" + this.formula.toLaTeX() + " \\oplus " + this.shift + "\\right)";
+    return "(" + this.formula.toLaTeX() + " \\oplus " + this.shift + ")";
   }
 
   /**
