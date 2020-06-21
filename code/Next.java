@@ -22,54 +22,81 @@
  * @author Franck van Breugel
  */
 public class Next extends Formula {
-  private Formula formula;
+	private Formula formula;
 
-  /**
-   * Initializes this next formula with the given subformula.
-   *
-   * @param formula the subformula
-   */
-  public Next(Formula formula) {
-    super();
-    this.formula = formula;
-  }
+	/**
+	 * Initializes this next formula with the given subformula.
+	 *
+	 * @param formula the subformula
+	 */
+	public Next(Formula formula) {
+		super();
+		this.formula = formula;
+	}
 
-  /**
-   * Returns the subformula of this next formula.
-   *
-   * @return the subformula of this next formula
-   */
-  public Formula getFormula() {
-    return this.formula;
-  }
+	/**
+	 * Returns the subformula of this next formula.
+	 *
+	 * @return the subformula of this next formula
+	 */
+	public Formula getFormula() {
+		return this.formula;
+	}
 
-  /**
-   * Returns a simplification of this formula that is semantically equivalent to this formula.
-   *
-   * @return a simplification of this formula
-   */
-  @Override
-  public Formula simplify() {
-    return this;
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Formula simplify() {
+		if (this.formula instanceof True) {
+			return this.formula;
+		} else {
+			return new Next(this.formula.simplify());
+		}
+	}
 
-  /**
-   * Returns a LaTeX representation of this formula.
-   *
-   * @return a LaTeX representation of this formula
-   */
-  @Override
-  public String toLaTeX() {
-    return "\\bigcirc" + this.formula.toLaTeX();
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isSmaller(Formula other) {
+		if (other instanceof Next) {
+			return this.formula.isSmaller(((Next) other).formula);
+		} else {
+			return false;
+		}
+	}
 
-  /**
-   * Returns a string representation of this formula.
-   *
-   * @return a string representation of this formula
-   */
-  @Override
-  public String toString() {
-    return "O [" + this.formula.toString() + "]";
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toLaTeX() {
+		return "\\bigcirc" + this.formula.toLaTeX();
+	}
+
+	/**
+	 * Tests whether this formula is syntactically equivalent to the given object.
+	 * 
+	 * @param object an object
+	 * @return true if this formula is syntactically equivalent to the given object,
+	 * false otherwise.
+	 */
+	public boolean equals(Object object) {
+		if (object instanceof Next) {
+			return this.formula.equals(((Next) object).formula);
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns a string representation of this formula.
+	 *
+	 * @return a string representation of this formula
+	 */
+	@Override
+	public String toString() {
+		return "O [" + this.formula.toString() + "]";
+	}
 }

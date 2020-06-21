@@ -22,54 +22,73 @@
  * @author Franck van Breugel
  */
 public class Label extends Formula {
-  private int label; // the index of the label
+	private int label; // the index of the label
 
-  /**
-   * Initializes this formula representing a label with the given index.
-   *
-   * @param label the index of the label
-   */
-  public Label(int label) {
-    super();
-    this.label = label;
-  }
+	/**
+	 * Initializes this formula representing a label with the given index.
+	 *
+	 * @param label the index of the label
+	 */
+	public Label(int label) {
+		super();
+		this.label = label;
+	}
 
-  /**
-   * Returns the index of the label.
-   *
-   * @return the index of the label
-   */
-  public int getLabel() {
-    return this.label;
-  }
+	/**
+	 * Returns the index of the label.
+	 *
+	 * @return the index of the label
+	 */
+	public int getLabel() {
+		return this.label;
+	}
 
-  /**
-   * Returns a simplification of this formula that is semantically equivalent to this formula.
-   *
-   * @return a simplification of this formula
-   */
-  @Override
-  public Formula simplify() {
-    return this;
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Formula simplify() {
+		return this;
+	}
 
-  /**
-   * Returns a LaTeX representation of this formula.
-   *
-   * @return a LaTeX representation of this formula
-   */
-  @Override
-  public String toLaTeX() {
-    return "\\ell_" + this.label;
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isSmaller(Formula other) {
+		if (other instanceof Label) {
+			return this.label == ((Label) other).label;
+		} else {
+			return false;
+		}
+	}
 
-  /**
-   * Returns a string representation of this formula.
-   *
-   * @return a string representation of this formula
-   */
-  @Override
-  public String toString() {
-    return "label_" + this.label;
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toLaTeX() {
+		return "\\ell_" + this.label;
+	}
+
+	/**
+	 * Tests whether this formula is syntactically equivalent to the given object.
+	 * 
+	 * @param object an object
+	 * @return true if this formula is syntactically equivalent to the given object,
+	 * false otherwise.
+	 */
+	public boolean equals(Object object) {
+		return object instanceof Label && this.label == ((Label) object).label;
+	}
+	
+	/**
+	 * Returns a string representation of this formula.
+	 *
+	 * @return a string representation of this formula
+	 */
+	@Override
+	public String toString() {
+		return "label_" + this.label;
+	}
 }

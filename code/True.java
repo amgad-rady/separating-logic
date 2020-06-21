@@ -22,40 +22,55 @@
  * @author Franck van Breugel
  */
 public class True extends Formula {
-  /**
-   * Initializes this formula.
-   */
-  public True() {
-    super();
-  }
+	/**
+	 * Initializes this formula.
+	 */
+	public True() {
+		super();
+	}
 
-  /**
-   * Returns a simplification of this formula that is semantically equivalent to this formula.
-   *
-   * @return a simplification of this formula
-   */
-  @Override
-  public Formula simplify() {
-    return this;
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Formula simplify() {
+		return this;
+	}
 
-  /**
-   * Returns a LaTeX representation of this formula.
-   *
-   * @return a LaTeX representation of this formula
-   */
-  @Override
-  public String toLaTeX() {
-    return "\\mathrm{true}";
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isSmaller(Formula other) {
+		return true;
+	}
 
-  /**
-   * Returns a string representation of this formula.
-   *
-   * @return a string representation of this formula
-   */
-  @Override
-  public String toString() {
-    return "true";
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toLaTeX() {
+		return "\\mathrm{true}";
+	}
+
+	/**
+	 * Tests whether this formula is syntactically equivalent to the given object.
+	 * 
+	 * @param object an object
+	 * @return true if this formula is syntactically equivalent to the given object,
+	 * false otherwise.
+	 */
+	public boolean equals(Object object) {
+		return object instanceof True;
+	}
+	
+	/**
+	 * Returns a string representation of this formula.
+	 *
+	 * @return a string representation of this formula
+	 */
+	@Override
+	public String toString() {
+		return "true";
+	}
 }

@@ -22,79 +22,99 @@
  * @author Franck van Breugel
  */
 public class Or extends Formula {
-  private Formula left;
-  private Formula right;
+	private Formula left;
+	private Formula right;
 
-  /**
-   * Initializes this formula as the disjunction of the given formulas.
-   *
-   * @param left  the left subformula
-   * @param right the right subformula
-   */
-  public Or(Formula left, Formula right) {
-    super();
-    this.left = left;
-    this.right = right;
-  }
+	/**
+	 * Initializes this formula as the disjunction of the given formulas.
+	 *
+	 * @param left  the left subformula
+	 * @param right the right subformula
+	 */
+	public Or(Formula left, Formula right) {
+		super();
+		this.left = left;
+		this.right = right;
+	}
 
-  /**
-   * Returns the left subformula.
-   *
-   * @return the left subformula
-   */
-  public Formula getLeft() {
-    return this.left;
-  }
+	/**
+	 * Returns the left subformula.
+	 *
+	 * @return the left subformula
+	 */
+	public Formula getLeft() {
+		return this.left;
+	}
 
-  /**
-   * Returns the right subformula.
-   *
-   * @return the right subformula
-   */
-  public Formula getRight() {
-    return this.right;
-  }
+	/**
+	 * Returns the right subformula.
+	 *
+	 * @return the right subformula
+	 */
+	public Formula getRight() {
+		return this.right;
+	}
 
-  /**
-   * Returns a simplification of this formula that is semantically equivalent to this formula.
-   *
-   * @return a simplification of this formula
-   */
-  @Override
-  public Formula simplify() {
-    Formula simplifiedLeft = this.left.simplify();
-    Formula simplifiedRight = this.right.simplify();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Formula simplify() {
+		Formula simplifiedLeft = this.left.simplify();
+		Formula simplifiedRight = this.right.simplify();
 
-    if ((simplifiedLeft instanceof True) || (simplifiedRight instanceof True)) {
-      return new True();
-    } else if ((simplifiedLeft instanceof False) && (simplifiedRight instanceof False)) {
-      return new False();
-    } else if ((simplifiedLeft instanceof False)) {
-      return simplifiedRight;
-    } else if ((simplifiedRight instanceof False)) {
-      return simplifiedLeft;
-    } else {
-      return new Or(simplifiedLeft, simplifiedRight);
-    }
-  }
+		if (simplifiedLeft.isSmaller(simplifiedRight)) {
+			return simplifiedLeft;
+		} else if (simplifiedRight.isSmaller(simplifiedLeft)) {
+			return simplifiedRight;
+		} else {
+			return new Or(simplifiedLeft, simplifiedRight);
+		}
+	}
 
-  /**
-   * Returns a LaTeX representation of this formula.
-   *
-   * @return a LaTeX representation of this formula
-   */
-  @Override
-  public String toLaTeX() {
-    return "(" + this.left.toLaTeX() + " \\vee " + this.right.toLaTeX() + ")";
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isSmaller(Formula other) {
+		if (other instanceof Or) {
+			return this.left.isSmaller(((Or) other).left) && this.right.isSmaller(((Or) other).right);
+		} else {
+			return false;
+		}
+	}
 
-  /**
-   * Returns a string representation of this formula.
-   *
-   * @return a string representation of this formula
-   */
-  @Override
-  public String toString() {
-    return "(" + this.left.toString() + " || " + this.right.toString() + ")";
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toLaTeX() {
+		return "(" + this.left.toLaTeX() + " \\vee " + this.right.toLaTeX() + ")";
+	}
+
+	/**
+	 * Tests whether this formula is syntactically equivalent to the given object.
+	 * 
+	 * @param object an object
+	 * @return true if this formula is syntactically equivalent to the given object,
+	 * false otherwise.
+	 */
+	public boolean equals(Object object) {		
+		if (object instanceof Or) {
+			Or other = (Or) object;
+			return this.left.equals(other.left) && this.right.equals(other.right);
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns a string representation of this formula.
+	 *
+	 * @return a string representation of this formula
+	 */
+	@Override
+	public String toString() {
+		return "(" + this.left.toString() + " || " + this.right.toString() + ")";
+	}
 }

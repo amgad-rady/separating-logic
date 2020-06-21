@@ -22,78 +22,108 @@
  * @author Franck van Breugel
  */
 public class Plus extends Formula {
-  private Formula formula;
-  private double shift;
+	private Formula formula;
+	private double shift;
 
-  /**
-   * Initializes this formula consisting of the given formula shifted by
-   * the given amount positively (adding).
-   *
-   * @param formula a formula
-   * @param shift   the shift amount
-   * @pre. shift in [0, 1]
-   */
-  public Plus(Formula formula, double shift) {
-    super();
-    this.formula = formula;
-    this.shift = shift;
-  }
+	/**
+	 * Initializes this formula consisting of the given formula shifted by
+	 * the given amount positively (adding).
+	 *
+	 * @param formula a formula
+	 * @param shift   the shift amount
+	 * @pre. shift in [0, 1]
+	 */
+	public Plus(Formula formula, double shift) {
+		super();
+		this.formula = formula;
+		this.shift = shift;
+	}
 
-  /**
-   * Returns the subformula of this formula.
-   *
-   * @return the subformula of this formula
-   */
-  public Formula getFormula() {
-    return this.formula;
-  }
+	/**
+	 * Returns the subformula of this formula.
+	 *
+	 * @return the subformula of this formula
+	 */
+	public Formula getFormula() {
+		return this.formula;
+	}
 
-  /**
-   * Returns the shift amount.
-   *
-   * @return the shift amount
-   */
-  public double getShift() {
-    return this.shift;
-  }
+	/**
+	 * Returns the shift amount.
+	 *
+	 * @return the shift amount
+	 */
+	public double getShift() {
+		return this.shift;
+	}
 
-  /**
-   * Returns a simplification of this formula that is semantically equivalent to this formula.
-   *
-   * @return a simplification of this formula
-   */
-  @Override
-  public Formula simplify() {
-    Formula simpliedFormula = this.formula.simplify();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Formula simplify() {
+		Formula simpliedFormula = this.formula.simplify();
 
-    if (simpliedFormula instanceof False) {
-      return simpliedFormula;
-    } else if (this.shift == 0) {
-      return simpliedFormula;
-    } else if (this.shift == 1) {
-      return new False();
-    } else {
-      return new Plus(simpliedFormula, this.shift);
-    }
-  }
+		if (simpliedFormula instanceof False) {
+			return simpliedFormula;
+		} else if (this.shift == 0) {
+			return simpliedFormula;
+		} else if (this.shift == 1) {
+			return new False();
+		} else {
+			return new Plus(simpliedFormula, this.shift);
+		}
+	}
 
-  /**
-   * Returns a LaTeX representation of this formula.
-   *
-   * @return a LaTeX representation of this formula
-   */
-  @Override
-  public String toLaTeX() {
-    return "(" + this.formula.toLaTeX() + " \\oplus " + this.shift + ")";
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isSmaller(Formula other) {
+		if (other instanceof Plus) {
+			if (this.formula.isSmaller(((Plus) other).formula)) {
+				return this.shift <= ((Plus) other).shift;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toLaTeX() {
+		return "(" + this.formula.toLaTeX() + " \\oplus " + this.shift + ")";
+	}
 
-  /**
-   * Returns a string representation of this formula.
-   *
-   * @return a string representation of this formula
-   */
-  @Override
-  public String toString() {
-    return "(" + this.formula.toString() + " + " + this.shift + ")";
-  }
+	/**
+	 * Tests whether this formula is syntactically equivalent to the given object.
+	 * 
+	 * @param object an object
+	 * @return true if this formula is syntactically equivalent to the given object,
+	 * false otherwise.
+	 */
+	public boolean equals(Object object) {
+		final double EPSILON = 0.0000000001;
+
+		if (object instanceof Plus) {
+			Plus other = (Plus) object;
+			return this.formula.equals(other.formula) && Math.abs(this.shift - other.shift) < EPSILON;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns a string representation of this formula.
+	 *
+	 * @return a string representation of this formula
+	 */
+	@Override
+	public String toString() {
+		return "(" + this.formula.toString() + " + " + this.shift + ")";
+	}
 }

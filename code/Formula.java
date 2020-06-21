@@ -29,6 +29,16 @@ public abstract class Formula {
    * @return a simplification of this formula
    */
   public abstract Formula simplify();
+  
+  /**
+   * Tests whether this formula is smaller than or equal to the other given formula.
+   * If true is returned, then this formula is smaller than or equal to the other given formula.
+   * If false is returned, then this formula may still be smaller than or equal to the other given formula.
+   * 
+   * @param other another formula
+   * @return true if this formula is smaller than or equal to the other given formula
+   */
+  public abstract boolean isSmaller(Formula other);
 
   /**
    * Returns a LaTeX representation of this formula.
